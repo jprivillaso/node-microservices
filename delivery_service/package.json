@@ -1,0 +1,21 @@
+{
+  "name": "delivery_service",
+  "version": "1.0.0",
+  "description": "Example of how to create microservices with nodejs",
+  "main": "index.js",
+  "scripts": {
+    "start": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jprivillaso/node-microservices.git"
+  },
+  "author": "Juan Rivillas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jprivillaso/node-microservices/issues"
+  },
+  "homepage": "https://github.com/jprivillaso/node-microservices#readme"
+}
