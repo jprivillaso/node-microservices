@@ -4,9 +4,9 @@
   "description": "Example of how to create microservices with nodejs",
   "main": "index.js",
   "scripts": {
-    "start": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo \"Error: no test specified\" && exit 1",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development CONTAINER_PORT=3001 nodemon index.js",
+    "test": "NODE_ENV=test mocha test/unit"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,30 @@
   "bugs": {
     "url": "https://github.com/jprivillaso/node-microservices/issues"
   },
-  "homepage": "https://github.com/jprivillaso/node-microservices#readme"
+  "engines": {
+    "node": "8.9.0"
+  },
+  "homepage": "https://github.com/jprivillaso/node-microservices#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
+    "compression": "^1.7.1",
+    "consign": "^0.1.6",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "knex": "^0.14.6",
+    "lodash": "^4.17.5",
+    "moment": "^2.20.1",
+    "morgan": "^1.9.0",
+    "mysql": "^2.15.0",
+    "node-fetch": "^2.1.2",
+    "swagger-tools": "^0.10.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-config-airbnb-base": "4.0.0",
+    "eslint-plugin-import": "1.10.2"
+  }
 }
