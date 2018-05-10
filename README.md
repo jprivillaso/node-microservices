@@ -1,5 +1,4 @@
 # node-microservices (work in progress)
-=======================================================
 
 The idea of this example is to illustrate how to create a microservices architecture in Nodejs.
 For that purpose, we are going to simulate an orders delivery system that has three microservices:
