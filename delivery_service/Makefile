@@ -27,8 +27,8 @@ push: ## Push image to gitlab registry
 	docker push $(DOCKER_REPO)/$(CONTAINER_NAME):$(VERSION)
 
 run: ## run single container
-	docker run --rm -ti -p $(HOST_PORT):$(CONTAINER_PORT) --network $(DEV_NETWORK) --name $(CONTAINER_NAME) \
-	-e MYSQL_HOST=$(MYSQL_HOST) -e MYSQL_DATABASE=$(MYSQL_DATABASE) -e MYSQL_PASSWORD=$(MYSQL_PASSWORD) -e MYSQL_USER=$(MYSQL_USER) \
+	docker run --rm -ti -d -p $(HOST_PORT):$(CONTAINER_PORT) --network $(NETWORK) --name $(CONTAINER_NAME) \
+	-e MYSQL_HOST=$(MYSQL_HOST) -e MYSQL_PORT=$(MYSQL_PORT) -e MYSQL_DATABASE=$(MYSQL_DATABASE) -e MYSQL_PASSWORD=$(MYSQL_PASSWORD) -e MYSQL_USER=$(MYSQL_USER) \
 	$(CONTAINER_NAME):$(VERSION)
 
 stop: ## stop single container
@@ -45,4 +45,11 @@ update: ## Update service
 lint:
 	@echo 'Running lint at txt_api folder'
 	npm run lint
+
+create_db:
+	docker run --name $(MYSQL_HOST) --net $(NETWORK) -p $(MYSQL_PORT):3306 -e MYSQL_ROOT_PASSWORD=password -d mysql
+fill_db:
+	mysql -h 127.0.0.1 -u root --port=$(MYSQL_PORT) -p$(MYSQL_ROOT_PASSWORD)  -e 'drop database if exists deliverydb; create database deliverydb;'
+	mysql -h 127.0.0.1 -u root --port=$(MYSQL_PORT) -p$(MYSQL_ROOT_PASSWORD) --database=deliverydb < sql/init.sql
+	sleep 2
 
