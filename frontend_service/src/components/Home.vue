@@ -3,7 +3,7 @@
     <h1> Delivery System Data </h1>
     <vue-good-table
       :columns="columns"
-      :rows="$store.state.orders"
+      :rows="orders"
       :search-options="{
         enabled: true
       }"
@@ -17,12 +17,15 @@
 
 <script>
 
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'App',
   async beforeMount() {
     await this.fetchOrders();
+  },
+  computed: {
+    ...mapState(['orders'])
   },
   data() {
     return {
