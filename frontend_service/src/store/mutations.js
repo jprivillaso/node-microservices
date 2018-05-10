@@ -1,6 +1,6 @@
 const mutations = {
-  fetchOrders(state, { orders }) {
-    state.orders = orders;
+  updateOrders(state, { data }) {
+    state.orders = data;
   }
 };
 

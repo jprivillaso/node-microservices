@@ -21,9 +21,9 @@ const findAll = async () => {
   }
 };
 
-const findOne = async (orderId) => {
+const findByStatus = async (status) => {
   try {
-    const response = await fetch(`http://${API_HOST}:${API_PORT}/orders/${orderId}`, options);
+    const response = await fetch(`http://${API_HOST}:${API_PORT}/orders/${status}`, options);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -34,5 +34,5 @@ const findOne = async (orderId) => {
 
 export default {
   findAll,
-  findOne
+  findByStatus
 };

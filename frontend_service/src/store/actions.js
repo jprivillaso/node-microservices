@@ -1,15 +1,11 @@
-import swal from 'sweetalert';
 import ordersAPI from '../services/ordersAPI';
 
-const fetchOrders = ({ commit }, { tableName, rowData }) => new Promise((resolve, reject) => {
-  ordersAPI.findAll(tableName, rowData)
+const fetchOrders = ({ commit }) => new Promise((resolve, reject) => {
+  ordersAPI.findAll()
     .then((data) => {
       commit('updateOrders', {
-        tableName,
         data
       });
-
-      swal('Success!', 'Table data was saved successfully!', 'success');
       resolve(data);
     })
     .catch((reason) => {
