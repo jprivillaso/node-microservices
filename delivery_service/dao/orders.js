@@ -6,8 +6,13 @@ module.exports = (app) => {
     return await mysql.table('orders').select();
   };
 
+  const findByStatus = async(status) => {
+    return await mysql.table('orders').select().where('status', status);
+  };
+
   return {
-    findAll
+    findAll,
+    findByStatus
   };
 
 };
