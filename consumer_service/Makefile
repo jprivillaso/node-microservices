@@ -29,6 +29,7 @@ push: ## Push image to gitlab registry
 run: ## run single container
 	docker run --rm -ti -d -p $(HOST_PORT):$(CONTAINER_PORT) --network $(NETWORK) --name $(CONTAINER_NAME) \
 	-e DELIVERY_SERVICE_HOST=$(DELIVERY_SERVICE_HOST) $(CONTAINER_NAME):$(VERSION)
+	docker logs -f $(CONTAINER_NAME)
 
 stop: ## stop single container
 	docker stop $(CONTAINER_NAME)

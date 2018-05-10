@@ -14,8 +14,9 @@ const main = async () => {
       if (job && job.length > 0) {
 
         // Simulate processing
-        await sleep(timeInterval);
         console.log(job[0]);
+        console.log('Processing ...');
+        await sleep(timeInterval);
 
       } else {
         console.log(`No orders to process. Idle ${timeInterval}ms ...`);
