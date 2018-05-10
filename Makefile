@@ -13,7 +13,7 @@ help: ## This help.
 # DOCKER TASKS
 
 # Build the container
-build: build_frontend_service build_delivery_service build_consumers_service
+build: build_delivery_service build_consumer_service build_frontend_service
 
 build_frontend_service: ### build frontend_service
 	$(MAKE) -C frontend_service -B build
@@ -22,12 +22,12 @@ build_delivery_service: ## build delivery_service
 	$(MAKE) -C delivery_service -B build
 
 build_consumer_service: ## build consumer_service
-	$(MAKE) -C consumers_service -B build
+	$(MAKE) -C consumer_service -B build
 
 push: ## Push all images
 	$(MAKE) -C frontend_service push
 	$(MAKE) -C delivery_service push
-	$(MAKE) -C consumers_service push
+	$(MAKE) -C consumer_service push
 
 stack-deploy: ## Initialize the swarm
 	docker stack deploy -c $(STACK) delivery_app
@@ -36,6 +36,6 @@ stack-remove: ## Leave the swarm
 	docker stack rm delivery_app
 
 lint: ## Lint all folders
-	$(MAKE) -C bridge_sync lint
-	$(MAKE) -C txt_api lint
-	$(MAKE) -C frontend lint
+	$(MAKE) -C frontend_service lint
+	$(MAKE) -C delivery_service lint
+	$(MAKE) -C consumer_service lint
