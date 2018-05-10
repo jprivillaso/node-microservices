@@ -30,6 +30,9 @@ module.exports = {
       js: 'never',
       vue: 'never'
     }],
+    'comma-dangle': 0,
+    'no-console': 0,
+    'no-alert': 0,
     // disallow reassignment of function parameters
     // disallow parameter object manipulation except for specific exclusions
     'no-param-reassign': ['error', {

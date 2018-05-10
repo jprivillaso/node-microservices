@@ -1,12 +1,19 @@
-'use strict'
-const path = require('path')
-const utils = require('./utils')
-const config = require('../config')
-const vueLoaderConfig = require('./vue-loader.conf')
+'use-strict';
 
-function resolve (dir) {
-  return path.join(__dirname, '..', dir)
+const path = require('path');
+const utils = require('./utils');
+const config = require('../config');
+const vueLoaderConfig = require('./vue-loader.conf');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+function resolve(dir) {
+  return path.join(__dirname, '..', dir);
 }
+
+const extractCSS = new ExtractTextPlugin({
+  filename: '[name].css',
+  ignoreOrder: true
+});
 
 const createLintingRule = () => ({
   test: /\.(js|vue)$/,
@@ -17,12 +24,14 @@ const createLintingRule = () => ({
     formatter: require('eslint-friendly-formatter'),
     emitWarning: !config.dev.showEslintErrorsInOverlay
   }
-})
+});
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: './src/main.js'
+    main: [
+      './src/main.js'
+    ]
   },
   output: {
     path: config.build.assetsRoot,
@@ -34,8 +43,9 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
+      vue$: 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      '@components': resolve('src/components')
     }
   },
   module: {
@@ -74,6 +84,16 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.scss$/,
+        use: [{
+          loader: 'style-loader' // creates style nodes from JS strings
+        }, {
+          loader: 'css-loader' // translates CSS into CommonJS
+        }, {
+          loader: 'sass-loader' // compiles Sass to CSS
+        }]
       }
     ]
   },
@@ -89,4 +109,4 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty'
   }
-}
+};
