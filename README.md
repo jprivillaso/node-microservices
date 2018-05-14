@@ -1,5 +1,9 @@
 # Nodejs Microservices
 
+Docker & Docker Swarm             |  NodeJs |  Vuejs
+:-------------------------:|:-------------------------:
+![](https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/f/9/a/3d42-fb67-4322-8438-2146e704d79c)  |  ![](http://www.simpalm.com/wp-content/uploads/2017/08/nodejs-logo-1.png ) | ![](https://cdn-images-1.medium.com/max/1600/0*BMTeY6AZG6odMFRI.png )
+
 It is very common to have doubts about how should we architect an application that needs to be scaled.
 These questions appear and I find very complicated to find resources that can exemplify that in an easy way.
 
