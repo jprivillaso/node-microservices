@@ -26,10 +26,33 @@ push: ## Push image to gitlab registry
 	docker tag $(CONTAINER_NAME):$(VERSION)  $(DOCKER_REPO)/$(CONTAINER_NAME):$(VERSION)
 	docker push $(DOCKER_REPO)/$(CONTAINER_NAME):$(VERSION)
 
+prepare_tests_environment:
+	mysql -h $(MYSQL_HOST) -u root --port=$(TEST_DB_PORT) -p$(MYSQL_ROOT_PASSWORD) \
+	-e 'drop database if exists $(TEST_DB); create database $(TEST_DB)'
+	mysql -h $(MYSQL_HOST) -u root --port=$(TEST_DB_PORT) -p$(MYSQL_ROOT_PASSWORD) \
+	--database=$(TEST_DB) < test/init-test-environment.sql
+	docker run --rm -ti -d -p $(TEST_HOST_PORT):$(CONTAINER_PORT) --network $(NETWORK) \
+	--name $(TEST_CONTAINER_NAME) -e MYSQL_HOST=$(MYSQL_HOST) -e MYSQL_PORT=$(TEST_DB_PORT) \
+	-e MYSQL_DATABASE=$(MYSQL_DATABASE) -e MYSQL_PASSWORD=$(MYSQL_ROOT_PASSWORD) -e MYSQL_USER=$(MYSQL_USER) \
+	$(CONTAINER_NAME):$(VERSION)
+
+make run_tests:
+	npm run test
+
+test:
+	make prepare_tests_environment
+	make run_tests
+
 run: ## run single container
 	docker run --rm -ti -d -p $(HOST_PORT):$(CONTAINER_PORT) --network $(NETWORK) --name $(CONTAINER_NAME) \
-	-e MYSQL_HOST=$(MYSQL_HOST) -e MYSQL_PORT=$(MYSQL_PORT) -e MYSQL_DATABASE=$(MYSQL_DATABASE) -e MYSQL_PASSWORD=$(MYSQL_PASSWORD) -e MYSQL_USER=$(MYSQL_USER) \
+	-e MYSQL_HOST=$(MYSQL_HOST) -e MYSQL_PORT=$(MYSQL_PORT) -e MYSQL_DATABASE=$(MYSQL_DATABASE) \
+	-e MYSQL_PASSWORD=$(MYSQL_PASSWORD) -e MYSQL_USER=$(MYSQL_USER) \
 	$(CONTAINER_NAME):$(VERSION)
+
+run_from_registry: ## run single container
+	docker run -d -p $(HOST_PORT):$(CONTAINER_PORT) --network $(NETWORK) --name $(CONTAINER_NAME) \
+	-e MYSQL_HOST=$(MYSQL_HOST) -e MYSQL_PORT=$(MYSQL_PORT) -e MYSQL_DATABASE=$(MYSQL_DATABASE) -e MYSQL_PASSWORD=$(MYSQL_PASSWORD) -e MYSQL_USER=$(MYSQL_USER) \
+	$(REGISTRY_URL)
 
 stop: ## stop single container
 	docker stop $(CONTAINER_NAME)

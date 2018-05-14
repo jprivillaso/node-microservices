@@ -31,8 +31,12 @@ push: ## Push image to gitlab registry
 	docker push $(DOCKER_REPO)/$(CONTAINER_NAME):$(VERSION)
 
 run: ## run single container
-	docker run --rm -ti -d -p $(HOST_PORT):$(CONTAINER_PORT) --network $(NETWORK) --name $(CONTAINER_NAME) \
+	docker run --rm -ti -d -p $(HOST_PORT):$(CONTAINER_PORT) --name $(CONTAINER_NAME) \
 	$(CONTAINER_NAME):$(VERSION)
+	@echo 'App listening at http://localhost:$(HOST_PORT)'
+
+run_from_registry: ## run single container
+	docker run -d -p $(HOST_PORT):$(CONTAINER_PORT) --network $(NETWORK) --name $(CONTAINER_NAME) $(REGISTRY_URL)
 	@echo 'App listening at http://localhost:$(HOST_PORT)'
 
 stop: ## stop single container

@@ -1,0 +1,50 @@
+version: "3"
+services:
+  web:
+    image: jprivillaso/delivery:latest
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3000:80"
+    networks:
+      - webnet
+  delivery_api:
+    image: jprivillaso/delivery_api:latest
+    environment:
+      - MYSQL_HOST=mysql_delivery
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=deliverydb
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+      - CONTAINER_PORT=3001
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3001:80"
+    networks:
+      - webnet
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
+networks:
+  webnet:
