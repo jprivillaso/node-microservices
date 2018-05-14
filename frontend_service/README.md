@@ -1,25 +1,10 @@
-# frontend_serivce
+# Frontend of Delivery System
 
-> Frontend for delivery system
+Vuejs application that has a simple user interface with a table that will display the list of all orders in the database.
 
-## Build Setup
+## Run it locally
 
-``` bash
-# install dependencies
-npm install
+1. Execute in a unix terminal `make build`
+2. Execute in a unix terminal `make run`
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
-```
+That will build and run the containers locally so you can access and run them.
